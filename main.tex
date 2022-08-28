@@ -1,0 +1,126 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage[
+    letterpaper,
+    margin=0.4in,
+    tmargin=0.7in,
+    bmargin=0.7in,
+    headsep=12pt,
+    footskip=12pt
+]{geometry}
+
+\theoremstyle{definition}
+\newtheorem{ques}{Question}
+\newtheorem*{ans}{Answer}
+
+\renewcommand{\Re}{\operatorname{Re}}
+\newcommand{\diam}{\operatorname{diam}}
+\newcommand{\RR}{\mathbb{R}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Control System Design}
+\lhead{Matthew Stringer}
+\chead{Problem Solutions}
+\cfoot{\thepage}
+
+\title{Control System Design Solutions}
+\author{Matthew Stringer}
+\date{}
+
+\begin{document}
+    \maketitle
+
+    \section*{Chapter 2 Answers}
+    \begin{ans}[2.5a]
+        For each cart, we know that acceleration is equal to the net Force 
+        divided by the mass. Thus,
+        \begin{equation*}
+            \ddot z_i = \frac{F_N}{M}.
+        \end{equation*}
+        We let the positive direction be to the right.
+        Thus, 
+        \begin{align*}
+            \ddot z_1 = \frac{1}{M} \left( F_{m1} - F_s \right) \\
+            \ddot z_2 = \frac{1}{M} \left( F_{m2} + F_s \right),
+        \end{align*}
+        where $F_{mi}$ are the forces from each respective motor, and
+        $F_s$ is the force from the intermediate spring.
+        Now lets derive the equations for the force $F_{mi}$.
+        This will follow from Example 2B of the textbook.
+        \begin{align*}
+            e_i - v_i &= Ri_i \\
+            e_i - K_2 w_i &= Ri \\
+            \tau_i &= K_1 i_i \\
+            e_i - K_2 w_i &= \frac{R\tau_i}{K_1} \\
+            \tau_i &= \frac{K_1}{R}e_i - \frac{K_1 K_2}{R}w_i \\
+            F_{mi} &= \frac{\tau_i}{r} = \frac{K_1}{rR}e_i - \frac{K_1 K_2}{rR}w_i \\
+            w_i r &= \dot z_i \\
+            F_{mi} &= \frac{K_1}{rR}e_i - \frac{K_1 K_2}{r^2 R}\dot z_i
+        \end{align*}
+        Now we will use Hooke's law to derive the force of the spring,
+        \begin{equation*}
+            F_s = kd = k(z_2 - z_1).
+        \end{equation*}
+        Thus, for our differential equations, we have
+        \begin{align*}
+            \ddot z_1 = \frac{k}{M} z_1 - \frac{k}{M}z_2 
+            - \frac{K_1 K_2}{r^2 R M}\dot z_1 
+            + \frac{K_1}{rRM} e_1
+            \\
+            \ddot z_2 = - \frac{k}{M} z_1 + \frac{k}{M}z_2 
+            - \frac{K_1 K_2}{r^2 R M}\dot z_2 
+            + \frac{K_1}{rRM} e_2.
+        \end{align*}
+        Finally for our state-space representation of the system, we have,
+        \begin{align*}
+            \begin{bmatrix}
+                \dot z_1 \\
+                \dot z_2 \\
+                \ddot z_1 \\
+                \ddot z_2 \\
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+                0 & 0 & 1 & 0 \\
+                0 & 0 & 0 & 1 \\
+                \frac{k}{M} & -\frac{k}{M} & -\frac{K_1 K_2}{r^2 R M} & 0 \\
+                -\frac{k}{M} & \frac{k}{M} &  0 & -\frac{K_1 K_2}{r^2 R M} \\
+            \end{bmatrix}
+            \begin{bmatrix}
+                z_1 \\
+                z_2 \\
+                \dot z_1 \\
+                \dot z_2 \\
+            \end{bmatrix}
+            +
+            \begin{bmatrix}
+                0 & 0 \\
+                0 & 0 \\
+                \frac{K_1}{rRM} & 0 \\
+                0 & \frac{K_1}{rRM} \\
+            \end{bmatrix}
+            \begin{bmatrix}
+                e_1 \\ e_2
+            \end{bmatrix}
+            .
+        \end{align*}
+    \end{ans}
+    \newpage
+    \begin{ans}[2.5b]
+        Using the differential equations above, we can create the
+        following blcok diagram.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[height=5in]{Problem_2.5.png}
+        \end{figure}
+    \end{ans}
+\end{document}
