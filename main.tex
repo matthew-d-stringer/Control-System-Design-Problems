@@ -182,7 +182,13 @@
         must have rank 4.
         \begin{comment}
 % Matlab LiveScript:
-syms k M K1 K2 r R
+M = 1;
+k = 40;
+K1 = 2;
+K2 = K1;
+R = 100;
+r = 0.02;
+
 A = [
 0 0 1 0
 0 0 0 1
@@ -201,27 +207,14 @@ rank(Q)
         \end{comment}
         Using matlab, we find that
         \begin{equation*}
-            \begin{array}{l}
-                Q = 
-                \left(\begin{array}{cccc}
-                0 & 0 & 0 & \sigma_2 \\
-                0 & \sigma_3  & \sigma_1  & \sigma_4 \\
-                0 & 0 & \sigma_2  & \frac{{K_1 }^2 \,K_2 \,k}{M^3 \,R^2 \,r^3 }\\
-                \sigma_3  & \sigma_1  & \sigma_4  & -\frac{K_1 \,{\left(\frac{K_1 \,K_2 \,k}{M^2 \,R\,r^2 }+\frac{K_1 \,K_2 \,\sigma_5 }{M\,R\,r^2 }\right)}}{M\,R\,r}
-                \end{array}\right)\\
-                \mathrm{}\\
-                \textrm{where}\\
-                \mathrm{}\\
-                \;\;\sigma_1 =-\frac{{K_1 }^2 \,K_2 }{M^2 \,R^2 \,r^3 }\\
-                \mathrm{}\\
-                \;\;\sigma_2 =-\frac{K_1 \,k}{M^2 \,R\,r}\\
-                \mathrm{}\\
-                \;\;\sigma_3 =\frac{K_1 }{M\,R\,r}\\
-                \mathrm{}\\
-                \;\;\sigma_4 =\frac{K_1 \,\sigma_5 }{M\,R\,r}\\
-                \mathrm{}\\
-                \;\;\sigma_5 =\frac{k}{M}+\frac{{K_1 }^2 \,{K_2 }^2 }{M^2 \,R^2 \,r^4 }
-            \end{array}
+            Q = 
+            \begin{bmatrix}
+                0   &       0   &       0  &      -40 \\
+                0   &       1   &    -100  &    10040 \\
+                0   &       0   &     -40  &     4000 \\
+                1   &    -100   &   10040  & -1008000
+            \end{bmatrix}
+            .
         \end{equation*}
         Also using matlab, we find that the rank of this matrix is 4.
         Thus, the system is controllable.
@@ -272,7 +265,13 @@ rank(Q)
         By using matlab, we can find
         \begin{comment}
 % Matlab LiveScript:
-syms k M K1 K2 r R
+M = 1;
+k = 40;
+K1 = 2;
+K2 = K1;
+R = 100;
+r = 0.02;
+
 A = [
 0 0 1 0
 0 0 0 1
@@ -290,32 +289,119 @@ Q = [B A*B A^2*B A^3*B]
 rank(Q)
         \end{comment}
         \begin{equation*}
-            \begin{array}{l}
-            Q = 
-                \left(\begin{array}{cccccccc}
-                0 & 0 & \sigma_4  & 0 & \sigma_1  & 0 & \sigma_5  & \sigma_2 \\
-                0 & 0 & 0 & \sigma_4  & 0 & \sigma_1  & \sigma_2  & \sigma_5 \\
-                \sigma_4  & 0 & \sigma_1  & 0 & \sigma_5  & \sigma_2  & \sigma_6  & \sigma_3 \\
-                0 & \sigma_4  & 0 & \sigma_1  & \sigma_2  & \sigma_5  & \sigma_3  & \sigma_6 
-                \end{array}\right)\\
-                \mathrm{}\\
-                \textrm{where}\\
-                \mathrm{}\\
-                \;\;\sigma_1 =-\frac{{K_1 }^2 \,K_2 }{M^2 \,R^2 \,r^3 }\\
-                \mathrm{}\\
-                \;\;\sigma_2 =-\frac{K_1 \,k}{M^2 \,R\,r}\\
-                \mathrm{}\\
-                \;\;\sigma_3 =\frac{2\,{K_1 }^2 \,K_2 \,k}{M^3 \,R^2 \,r^3 }\\
-                \mathrm{}\\
-                \;\;\sigma_4 =\frac{K_1 }{M\,R\,r}\\
-                \mathrm{}\\
-                \;\;\sigma_5 =\frac{K_1 \,\sigma_7 }{M\,R\,r}\\
-                \mathrm{}\\
-                \;\;\sigma_6 =-\frac{K_1 \,{\left(\frac{K_1 \,K_2 \,k}{M^2 \,R\,r^2 }+\frac{K_1 \,K_2 \,\sigma_7 }{M\,R\,r^2 }\right)}}{M\,R\,r}\\
-                \mathrm{}\\
-                \;\;\sigma_7 =\frac{k}{M}+\frac{{K_1 }^2 \,{K_2 }^2 }{M^2 \,R^2 \,r^4 }
-                \end{array}
+            Q =     
+            \begin{bmatrix}
+                0    &      0    &      1    &      0     &  -100    &      0  &    10040  &      -40 \\
+                0    &      0    &      0    &      1     &     0    &   -100  &      -40  &    10040 \\
+                1    &      0    &   -100    &      0     & 10040    &    -40  & -1008000  &     8000 \\
+                0    &      1    &      0    &   -100     &   -40    &  10040  &     8000  & -1008000
+            \end{bmatrix}
+            .
         \end{equation*}
-        Also using matlab, we find that the rank of this matrix is always 4.
+        Also using matlab, we find that the rank of this matrix is 4.
+    \end{ans}
+
+    \begin{ans}[5.2c]
+        Recall that the state vector is
+        \begin{equation*}
+            x = 
+            \begin{bmatrix}
+                z_1 \\
+                z_2 \\
+                \dot z_1 \\
+                \dot z_2
+            \end{bmatrix}
+            .
+        \end{equation*}
+        Thus, if you can only measure the position of the 
+        cart, our observation matrix must be
+        \begin{equation*}
+            C = 
+            \begin{bmatrix}
+                1 & 0 & 0 & 0
+            \end{bmatrix}
+            .
+        \end{equation*}
+        Recall that in order the system is observable if and only if 
+        the matrix 
+        \begin{equation*}
+            N = 
+            \begin{bmatrix}
+                C' & A' C' & (A')^2 C' & (A')^3 C'
+            \end{bmatrix}
+        \end{equation*}
+        has rank 4.
+        Using matlab we can find
+        \begin{equation*}
+            N = 
+            \begin{bmatrix}
+                1    &      0    &     40   &   -4000 \\
+                0    &      0    &    -40   &    4000 \\
+                0    &      1    &   -100   &   10040 \\
+                0    &      0    &      0   &     -40
+            \end{bmatrix}
+        \end{equation*}
+        Using the rank function in Matlab, we find that the rank of
+        this matrix is always 4. 
+        Thus the system is observable.
+        \begin{comment}
+% Matlab LiveScript
+M = 1;
+k = 40;
+K1 = 2;
+K2 = K1;
+R = 100;
+r = 0.02;
+
+A = [
+0 0 1 0
+0 0 0 1
+k/M -k/M -K1*K2/(r^2*R*M) 0
+-k/M k/M 0 -K1*K2/(r^2*R*M)
+];
+
+B = [
+    0 0 
+    0 0 
+    K1/(r*R*M) 0
+    0 K1/(r*R*M)
+    ];
+
+C = [1 0 0 0]
+
+Q = [B A*B A^2*B A^3*B] 
+rank(Q)
+
+N = [
+    C' , A'*C' , (A')^2 * C' , (A')^3 * C'
+    ]
+
+rank(N)
+        \end{comment}
+    \end{ans}
+
+    \begin{ans}[5.2d]
+        If only the velocity of the first car is measurable,
+        then 
+        \begin{equation*}
+            C = 
+            \begin{bmatrix}
+                0 & 1 & 0 & 0
+            \end{bmatrix}
+            .
+        \end{equation*}
+        Using Matlab,
+        we find 
+        \begin{equation*}
+            N = 
+            \begin{bmatrix}
+                0    &      0    &    -40   &    4000 \\
+                1    &      0    &     40   &   -4000 \\
+                0    &      0    &      0   &     -40 \\
+                0    &      1    &   -100   &   10040
+            \end{bmatrix}
+            .
+        \end{equation*}
+        and that the rank of this matrix is still 4.
     \end{ans}
 \end{document}
